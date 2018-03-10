@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: k8s-poc-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: k8s-poc
+    spec:
+      containers:
+      - name: k8s-poc
+        image: ehipolito/k8s-poc:latest
+        ports:
+        - containerPort: 8181
+          name: k8s-poc-port
+        env:
+        - name: CONSUL_HOST
+          value: k8s-poc-consul-service
