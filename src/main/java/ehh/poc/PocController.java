@@ -22,13 +22,12 @@ public class PocController {
 	@Value("${template}")
 	private String template;
 
-	@GetMapping(value = "/hello/pessoa/{id}", produces = "application/json; charset=UTF-8")
+	@GetMapping(value = "/hello/pessoa/{nome}", produces = "application/json; charset=UTF-8")
 	public ResponseEntity<Hello> hello(@PathVariable("nome") String nome) {
 		logger.info(String.format("hello(id: %s)", nome));
 
-		Person pessoa = new Person();
 		Hello hello = new Hello();
-		hello.setMsg(template.replaceAll("\\$name", pessoa.getName()));
+		hello.setMsg(template.replaceAll("\\$name", nome));
 
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.set("hostname", System.getenv("HOSTNAME"));
