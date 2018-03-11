@@ -15,6 +15,3 @@ spec:
         ports:
         - containerPort: 8181
           name: k8s-poc-port
-        env:
-        - name: CONSUL_HOST
-          value: k8s-poc-consul-service
