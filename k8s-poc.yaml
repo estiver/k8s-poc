@@ -7,10 +7,10 @@ spec:
   template:
     metadata:
       labels:
-        app: k8s-poc
+        app: k8s-poc-${suffix}
     spec:
       containers:
-      - name: k8s-poc
+      - name: k8s-poc-${suffix}
         image: ehipolito/k8s-poc:1
         ports:
         - containerPort: 8181

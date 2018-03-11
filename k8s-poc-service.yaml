@@ -5,8 +5,8 @@ metadata:
 spec:
   ports:
   - port: 80
-    targetPort:  k8s-poc-port-v1
+    targetPort:  k8s-poc-port
     protocol: TCP
   selector:
-    app: k8s-poc-v1
+    app: k8s-poc-${suffix}
   type: LoadBalancer
