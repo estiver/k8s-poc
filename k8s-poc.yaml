@@ -1,17 +1,17 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: k8s-poc-deployment-v1
+  name: k8s-poc-deployment-${sname}
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: k8s-poc-v1
+        app: k8s-poc
     spec:
       containers:
-      - name: k8s-poc-v1
+      - name: k8s-poc
         image: ehipolito/k8s-poc:1
         ports:
         - containerPort: 8181
-          name: k8s-poc-port-v1
+          name: k8s-poc-port
