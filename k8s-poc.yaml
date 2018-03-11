@@ -10,8 +10,8 @@ spec:
         app: k8s-poc-v1
     spec:
       containers:
-      - name: k8s-poc
+      - name: k8s-poc-v1
         image: ehipolito/k8s-poc:1
         ports:
         - containerPort: 8181
-          name: k8s-poc-port
+          name: k8s-poc-port-v1
