@@ -1,1 +1,2 @@
 {{ key "poc/desenv/application.properties" }}
+spring.datasource.password={{ with secret "secret/poc/db/pass" }}{{ .Data.value }}{{ end }}

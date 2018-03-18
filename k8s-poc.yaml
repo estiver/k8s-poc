@@ -15,3 +15,9 @@ spec:
         ports:
         - containerPort: 8181
           name: k8s-poc-port
+        env:
+          - name: VAULT_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: vault-secrets
+                key: vault-token
