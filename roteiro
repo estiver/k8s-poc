@@ -1,0 +1,80 @@
+git clone https://github.com/estiver/k8s-poc.git
+git checkout v1
+
+sudo cat k8s-poc.yaml| sed 's/${suffix}/v1/g' | sudo kubectl create -f -
+sudo cat k8s-poc-service.yaml| sed 's/${suffix}/v1/g' | sudo kubectl create -f -
+
+sudo kubectl get all
+sudo minikube service k8s-poc-service-v1 --url
+${url}/poc/swagger-ui.html
+
+kubectl scale --current-replicas=1 --replicas=2 deploy/k8s-poc-deployment-v1
+curl -X GET "http://${url}/poc/hello/pessoa/elemento" -H "accept: application/json;charset=UTF-8" -vvv
+sudo kubectl delete po/k8s-poc-deployment-v1-...
+curl -X GET "http://${url}/poc/hello/pessoa/elemento" -H "accept: application/json;charset=UTF-8" -vvv
+
+kubectl config use-context k8s.ehh.fun
+ou
+sudo kops create cluster --name=k8s.ehh.fun --state=s3://kops-state-ehh000 --zones=us-east-1a --node-count=2 --node-size=t2.micro --master-size=t2.micro --dns-zone=k8s.ehh.fun
+sudo kops update cluster k8s.ehh.fun --yes --state=s3://kops-state-ehh000
+sudo cat k8s-poc.yaml| sed 's/${suffix}/v1/g' | sudo kubectl create -f -
+sudo cat k8s-poc-service.yaml| sed 's/${suffix}/v1/g' | sudo kubectl create -f -
+http://acda720e32bdb11e8a8c31203346ba57-1544751097.us-east-1.elb.amazonaws.com/poc/swagger-ui.html
+http://poc.k8s.ehh.fun/poc/swagger-ui.html
+
+kubectl config current-context
+kubectl config use-context minikube
+sudo kubectl set image deploy/k8s-poc-deployment-v1 k8s-poc-v1=ehipolito/k8s-poc:latest
+${url}/poc/swagger-ui.html
+sudo kubectl get pods
+sudo kubectl logs -f nome do pod
+sudo kubectl rollout status deploy/k8s-poc-deployment-v1
+sudo kubectl rollout undo deploy/k8s-poc-deployment-v1
+sudo kubectl rollout status deploy/k8s-poc-deployment-v1
+${url}/poc/swagger-ui.html
+
+git checkout master
+sudo cat k8s-poc-db.yml | sudo kubectl create -f -
+sudo cat k8s-poc-db-service.yaml | sudo kubectl create -f -
+sudo cat k8s-poc-consul.yaml| sudo kubectl create -f -
+sudo cat k8s-poc-consul-service.yaml| sudo kubectl create -f -
+sudo cat k8s-poc-vault.yaml| sudo kubectl create -f -
+sudo cat k8s-poc-vault-service.yaml| sudo kubectl create -f -
+
+sudo kubectl get service
+sudo minikube service k8s-poc-consul-service --url
+{url}
+set poc/desenv/application.properties
+    template=Ola $name seu id e: $id
+
+sudo kubectl get pod
+sudo kubectl exec -it k8s-poc-vault-deployment-.... sh
+    export VAULT_ADDR=http://127.0.0.1:8200
+    export VAULT_TOKEN=$(cat /home/vault/.vault-token)
+    vault token create
+        guardar token
+    exit
+    sudo kubectl delete secret vault-secrets
+    echo ${token} |base64
+    sudo cat k8s-poc-secret.yml| sed 's/${token}/NDYyMTBiNmMtOGExNy0zYzk4LTM1MTEtOWVlN2FmYTVmMDY3Cg==/g' | sudo kubectl create -f -
+    sudo minikube service k8s-poc-vault-service --url
+    curl -X POST -H "X-Vault-Token: {token}" http://{url}/v1/secret/poc/db/pass --data '{"value": "poc123"}'
+
+sudo cat k8s-poc.yaml| sed 's/${suffix}/v2/g' | sudo kubectl create -f -
+sudo cat k8s-poc-service.yaml| sed 's/${suffix}/v2/g' | sudo kubectl create -f -
+sudo minikube service k8s-poc-service-v2 --url
+{url}/poc/swagger-ui.html
+
+sudo kubectl set image deploy/k8s-poc-deployment-v2 k8s-poc=ehipolito/k8s-poc:v1
+{url}/poc/swagger-ui.html
+sudo kubectl rollout undo deploy/k8s-poc-deployment-v2
+sudo kubectl rollout status deploy/k8s-poc-deployment-v2
+
+sudo cat k8s-ingress.yml | sudo kubectl create -f -
+sudo cat k8s-ingress-nginx-controller.yml | sudo kubectl create -f -
+sudo minikube ip
+curl -X GET -H "Host: k8s-poc-v1" "http://{ip}/poc/hello/pessoa/elemento" 
+curl -X GET -H "Host: k8s-poc-v2" "http://{ip}/poc/hello/pessoa/1"
+
+
+sudo kubectl delete deploy/k8s-poc-consul-deployment deploy/k8s-poc-deployment-v1 deploy/k8s-poc-deployment-v2 deploy/k8s-poc-vault-deployment po/database  svc/database-service svc/k8s-poc-consul-service svc/k8s-poc-service-v1 svc/k8s-poc-service-v2 svc/k8s-poc-vault-service secret/vault-secrets
