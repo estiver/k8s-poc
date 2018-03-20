@@ -8,6 +8,22 @@ sudo kubectl get all
 sudo minikube service k8s-poc-service-v1 --url
 ${url}/poc/swagger-ui.html
 
+kubectl scale --current-replicas=1 --replicas=2 deploy/k8s-poc-deployment-v1
+curl -X GET "http://${url}/poc/hello/pessoa/elemento" -H "accept: application/json;charset=UTF-8" -vvv
+sudo kubectl delete po/k8s-poc-deployment-v1-...
+curl -X GET "http://${url}/poc/hello/pessoa/elemento" -H "accept: application/json;charset=UTF-8" -vvv
+
+kubectl config use-context k8s.ehh.fun
+ou
+sudo kops create cluster --name=k8s.ehh.fun --state=s3://kops-state-ehh000 --zones=us-east-1a --node-count=2 --node-size=t2.micro --master-size=t2.micro --dns-zone=k8s.ehh.fun
+sudo kops update cluster k8s.ehh.fun --yes --state=s3://kops-state-ehh000
+sudo cat k8s-poc.yaml| sed 's/${suffix}/v1/g' | sudo kubectl create -f -
+sudo cat k8s-poc-service.yaml| sed 's/${suffix}/v1/g' | sudo kubectl create -f -
+http://acda720e32bdb11e8a8c31203346ba57-1544751097.us-east-1.elb.amazonaws.com/poc/swagger-ui.html
+http://poc.k8s.ehh.fun/poc/swagger-ui.html
+
+kubectl config current-context
+kubectl config use-context minikube
 sudo kubectl set image deploy/k8s-poc-deployment-v1 k8s-poc-v1=ehipolito/k8s-poc:latest
 ${url}/poc/swagger-ui.html
 sudo kubectl get pods
