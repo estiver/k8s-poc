@@ -7,6 +7,8 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import io.swagger.client.ApiClient;
+import io.swagger.client.api.PersonControllerApi;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.spi.DocumentationType;
@@ -25,6 +27,15 @@ public class PocApplication {
 		return new Docket(DocumentationType.SWAGGER_2).select()
 				.apis(RequestHandlerSelectors.basePackage("ehh.poc"))
 				.paths(PathSelectors.any()).build();
+	}
+	
+	@Bean
+	public PersonControllerApi personControllerApi(){
+		ApiClient apiClient = io.swagger.client.Configuration.getDefaultApiClient();
+		apiClient.setBasePath("http://127.0.0.1:8182/person");
+		PersonControllerApi personControllerApi = new PersonControllerApi(apiClient);
+		
+		return personControllerApi;
 	}
 	
 	public static void main(String[] args) {

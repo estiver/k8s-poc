@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.client.ApiException;
+import io.swagger.client.api.PersonControllerApi;
+
 @RestController
 @RequestMapping("/")
 @RefreshScope
@@ -25,14 +28,18 @@ public class PocController {
 	@Value("${template}")
 	private String template;
 
+//	@Autowired
+//	private PersonRepository pessoaRepository;
+	
 	@Autowired
-	private PersonRepository pessoaRepository;
+	private PersonControllerApi personControllerApi;
 
 	@GetMapping(value = "/hello/pessoa/{id}", produces = "application/json; charset=UTF-8")
-	public ResponseEntity<Hello> retrieve(@PathVariable("id") String id) {
+	public ResponseEntity<Hello> retrieve(@PathVariable("id") String id) throws ApiException {
 		logger.info(String.format("retrieve(id: %s)", id));
 
-		Person pessoa = pessoaRepository.findOne(id);
+		//Person pessoa = pessoaRepository.findOne(id);
+		io.swagger.client.model.Person pessoa = personControllerApi.getPersonUsingGET(id);
 		Hello hello = new Hello();
 		hello.setMsg(template.replaceAll("\\$id", pessoa.getId()).replaceAll("\\$name", pessoa.getName()));
 
@@ -41,10 +48,10 @@ public class PocController {
 
 		return new ResponseEntity<Hello>(hello, responseHeaders, HttpStatus.OK);
 	}
-
-	@PostMapping(value = "/pessoa/", produces = "application/json; charset=UTF-8")
-	public void create(@RequestBody Person pessoa) {
-		logger.info(String.format("create(id: %s, name: %s)", pessoa.getId(), pessoa.getName()));
-		pessoaRepository.save(pessoa);
-	}
+//
+//	@PostMapping(value = "/pessoa/", produces = "application/json; charset=UTF-8")
+//	public void create(@RequestBody Person pessoa) {
+//		logger.info(String.format("create(id: %s, name: %s)", pessoa.getId(), pessoa.getName()));
+//		pessoaRepository.save(pessoa);
+//	}
 }
