@@ -62,8 +62,8 @@ sudo kubectl exec -it k8s-poc-vault-deployment-.... sh
     echo ${token} |base64
     sudo cat k8s-poc-secret.yml| sed 's/${token}/Yzg0ODNmODYtNDU4NS01ZDFiLWM0NGEtMmQyNDU5NWUyNDczCg==/g' | sudo kubectl create -f -
     sudo minikube service k8s-poc-vault-service --url
-    #curl -X POST -H "X-Vault-Token: {token}" http://{url}/v1/secret/poc/db/pass --data '{"value": "poc123"}'
-    curl -X POST -H "X-Vault-Token: {token}" http://{url}/v2/secret/poc/db/pass --data '{"value": "poc123"}'
+    curl -X POST -H "X-Vault-Token: {token}" http://{url}/v1/secret/poc/db/pass --data '{"value": "poc123"}'
+    #curl -X POST -H "X-Vault-Token: {token}" http://{url}/v2/secret/poc/db/pass --data '{"value": "poc123"}'
 
 sudo cat k8s-poc-person.yaml| sudo kubectl create -f -
 sudo cat k8s-poc-person-service.yaml | sudo kubectl create -f -
