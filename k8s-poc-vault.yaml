@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
       - name: k8s-poc-vault
-        image: vault:latest
+        image: vault:0.9.6
         ports:
         - name: api-port
           containerPort: 8200

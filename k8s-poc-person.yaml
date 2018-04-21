@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: k8s-person-dpl
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: k8s-poc-person
+    spec:
+      containers:
+      - name: k8s-poc-person
+        image: ehipolito/k8s-poc-person:latest
+        ports:
+        - containerPort: 8182
+          name: k8s-person-port
+        env:
+          - name: VAULT_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: vault-secrets
+                key: vault-token

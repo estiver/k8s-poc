@@ -4,6 +4,8 @@ git checkout v1
 sudo cat k8s-poc.yaml| sed 's/${suffix}/v1/g' | sudo kubectl create -f -
 sudo cat k8s-poc-service.yaml| sed 's/${suffix}/v1/g' | sudo kubectl create -f -
 
+sudo kubectl describe pod NOMEDOPOD
+
 sudo kubectl get all
 sudo minikube service k8s-poc-service-v1 --url
 ${url}/poc/swagger-ui.html
@@ -33,6 +35,8 @@ sudo kubectl rollout undo deploy/k8s-poc-deployment-v1
 sudo kubectl rollout status deploy/k8s-poc-deployment-v1
 ${url}/poc/swagger-ui.html
 
+v2 =================================================================================================
+
 git checkout master
 sudo cat k8s-poc-db.yml | sudo kubectl create -f -
 sudo cat k8s-poc-db-service.yaml | sudo kubectl create -f -
@@ -56,9 +60,13 @@ sudo kubectl exec -it k8s-poc-vault-deployment-.... sh
     exit
     sudo kubectl delete secret vault-secrets
     echo ${token} |base64
-    sudo cat k8s-poc-secret.yml| sed 's/${token}/NDYyMTBiNmMtOGExNy0zYzk4LTM1MTEtOWVlN2FmYTVmMDY3Cg==/g' | sudo kubectl create -f -
+    sudo cat k8s-poc-secret.yml| sed 's/${token}/Yzg0ODNmODYtNDU4NS01ZDFiLWM0NGEtMmQyNDU5NWUyNDczCg==/g' | sudo kubectl create -f -
     sudo minikube service k8s-poc-vault-service --url
-    curl -X POST -H "X-Vault-Token: {token}" http://{url}/v1/secret/poc/db/pass --data '{"value": "poc123"}'
+    #curl -X POST -H "X-Vault-Token: {token}" http://{url}/v1/secret/poc/db/pass --data '{"value": "poc123"}'
+    curl -X POST -H "X-Vault-Token: {token}" http://{url}/v2/secret/poc/db/pass --data '{"value": "poc123"}'
+
+sudo cat k8s-poc-person.yaml| sudo kubectl create -f -
+sudo cat k8s-poc-person-service.yaml | sudo kubectl create -f -
 
 sudo cat k8s-poc.yaml| sed 's/${suffix}/v2/g' | sudo kubectl create -f -
 sudo cat k8s-poc-service.yaml| sed 's/${suffix}/v2/g' | sudo kubectl create -f -

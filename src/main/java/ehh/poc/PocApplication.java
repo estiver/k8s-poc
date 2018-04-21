@@ -1,5 +1,6 @@
 package ehh.poc;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -22,6 +23,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class PocApplication {
 
+	@Value("${url.person}")
+	private String urlPerson;
+	
 	@Bean
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2).select()
@@ -32,7 +36,7 @@ public class PocApplication {
 	@Bean
 	public PersonControllerApi personControllerApi(){
 		ApiClient apiClient = io.swagger.client.Configuration.getDefaultApiClient();
-		apiClient.setBasePath("http://127.0.0.1:8182/person");
+		apiClient.setBasePath(urlPerson);
 		PersonControllerApi personControllerApi = new PersonControllerApi(apiClient);
 		
 		return personControllerApi;
