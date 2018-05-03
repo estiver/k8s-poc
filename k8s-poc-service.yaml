@@ -4,7 +4,8 @@ metadata:
   name: k8s-poc-service-${suffix}
 spec:
   ports:
-  - port: 80
+  - name: http
+    port: 80
     targetPort:  k8s-poc-port
     protocol: TCP
   selector:
