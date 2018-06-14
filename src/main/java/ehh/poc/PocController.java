@@ -31,6 +31,7 @@ public class PocController {
 
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.set("hostname", System.getenv("HOSTNAME"));
+		responseHeaders.set("version", "v1");
 
 		return new ResponseEntity<Hello>(hello, responseHeaders, HttpStatus.OK);
 	}

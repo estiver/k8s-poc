@@ -1,17 +1,17 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: k8s-poc-deployment-${suffix}
+  name: k8s-poc-deployment-v1
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: k8s-poc-${suffix}
+        app: k8s-poc-v1
     spec:
       containers:
-      - name: k8s-poc-${suffix}
-        image: ehipolito/k8s-poc:1
+      - name: k8s-poc-v1
+        image: PT15239NB-LINUX:5000/ehh-poc:v1-local
         ports:
         - containerPort: 8181
           name: k8s-poc-port
